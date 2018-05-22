@@ -1,5 +1,6 @@
-package com.sap.chatbot.config.async;
+package com.sap.chatbot.async.impl;
 
+import com.sap.chatbot.async.AsyncRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;

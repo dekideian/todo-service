@@ -1,4 +1,4 @@
-package com.sap.chatbot.config.async;
+package com.sap.chatbot.async;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

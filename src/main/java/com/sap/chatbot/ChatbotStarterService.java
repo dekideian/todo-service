@@ -1,6 +1,6 @@
 package com.sap.chatbot;
 
-import com.sap.chatbot.config.async.AsyncRunner;
+import com.sap.chatbot.async.AsyncRunner;
 import com.sap.chatbot.repository.api.EmployeeRepository;
 import io.vavr.collection.Stream;
 import org.springframework.boot.SpringApplication;
