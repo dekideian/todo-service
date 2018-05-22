@@ -18,7 +18,7 @@ spring:
     platform: postgresql
     hikari:
       connection-timeout: 10000
-      maximum-pool-size: 10
+      maximum-pool-size: 20
       pool-name: HikariCP
   redis:
     host: locahost

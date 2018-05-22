@@ -3,6 +3,7 @@ package com.sap.chatbot.domain.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -22,8 +23,7 @@ public class Employee {
   @Column(nullable = false)
   private String name;
 
-  @Column(updatable = false)
-  private Long age;
+  @Column private Long age;
 
   public UUID getId() {
     return id;
@@ -52,6 +52,25 @@ public class Employee {
     return this;
   }
 
+  @Override
+  public String toString() {
+    return "Employee{" + "id=" + id + ", name='" + name + '\'' + ", age=" + age + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Employee employee = (Employee) o;
+    return Objects.equals(getId(), employee.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId());
+  }
+
+  // useful for JPA fast path init
   Employee() {}
 
   private Employee(String name, Long age) {
