@@ -3,6 +3,8 @@ package com.sap.chatbot.async.core;
 import com.sap.chatbot.async.AsyncRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
@@ -20,10 +22,12 @@ import java.util.stream.Stream;
 public class JdbcPooledAsyncRunner implements AsyncRunner {
 
   private final Scheduler jdbcScheduler;
+  private final TransactionTemplate transactionTemplate;
 
   @Autowired
-  public JdbcPooledAsyncRunner(Scheduler jdbcScheduler) {
+  public JdbcPooledAsyncRunner(Scheduler jdbcScheduler, TransactionTemplate transactionTemplate) {
     this.jdbcScheduler = jdbcScheduler;
+    this.transactionTemplate = transactionTemplate;
   }
 
   @Override
@@ -49,6 +53,7 @@ public class JdbcPooledAsyncRunner implements AsyncRunner {
   }
 
   @Override
+  @Transactional
   public <T, C extends Iterable<T>> Flux<T> computeManyAsync(Callable<C> computation) {
     return Mono.fromCallable(computation)
         .flatMapMany(Flux::fromIterable)

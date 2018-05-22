@@ -2,7 +2,7 @@ package com.sap.chatbot;
 
 import com.sap.chatbot.async.AsyncRunner;
 import com.sap.chatbot.repository.api.EmployeeRepository;
-import io.vavr.collection.Stream;
+import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -18,16 +18,21 @@ public class ChatbotStarterService {
 
     final EmployeeRepository employeeRepository = context.getBean(EmployeeRepository.class);
     final AsyncRunner jdbcPooledAsyncRunner = context.getBean(AsyncRunner.class);
+    final EmployeeService employeeService = context.getBean(EmployeeService.class);
 
-    Stream.range(0, 1000).forEach((idx) -> runTask(idx, employeeRepository, jdbcPooledAsyncRunner));
+    employeeService.findAll().subscribe(System.out::println);
   }
+  //    Stream.range(0, 1000).forEach((idx) -> runTask(idx, employeeRepository,
+  // jdbcPooledAsyncRunner));
 
-  private static void runTask(int index, EmployeeRepository employeeRepository, AsyncRunner jdbcPooledAsyncRunner) {
-    jdbcPooledAsyncRunner
-        .computeManyAsync(() -> {
-          System.out.println("Running task <" + index + "> on " + Thread.currentThread().getName());
-          return employeeRepository.findEmployeesOlderThan(1000L);
-        })
-        .subscribe(System.out::println);
-  }
+  //  private static void runTask(int index, EmployeeRepository employeeRepository, AsyncRunner
+  // jdbcPooledAsyncRunner) {
+  //    jdbcPooledAsyncRunner
+  //        .computeManyAsync(() -> {
+  //          System.out.println("Running task <" + index + "> on " +
+  // Thread.currentThread().getName());
+  //          return employeeRepository.findEmployeesOlderThan(1000L);
+  //        })
+  //        .subscribe(System.out::println);
+  //  }
 }
