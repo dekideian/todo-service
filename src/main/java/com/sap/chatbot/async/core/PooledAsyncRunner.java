@@ -28,7 +28,7 @@ public class PooledAsyncRunner implements AsyncRunner {
   }
 
   @Override
-  public Mono<Void> execute(Runnable task) {
+  public Mono<Void> task(Runnable task) {
     return Mono.<Void>fromRunnable(task)
         .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());

@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  */
 public interface AsyncRunner {
 
-  Mono<Void> execute(Runnable task);
+  Mono<Void> task(Runnable task);
 
   <T> Mono<T> oneOrZero(Callable<Optional<T>> computation);
 

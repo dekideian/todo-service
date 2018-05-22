@@ -6,7 +6,6 @@ import com.sap.chatbot.repository.api.sync.EmployeeRepository;
 import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -33,7 +32,6 @@ public class DefaultEmployeeService implements EmployeeService {
   }
 
   @Override
-  @Transactional
   public Flux<Employee> findAll() {
     return asyncRunner.many(employeeRepository::findAll);
   }
