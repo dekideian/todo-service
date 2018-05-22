@@ -1,0 +1,25 @@
+server:
+  port: ${env.PORT:8080}
+  servlet:
+    context-path: /api/v1.0/
+spring:
+  application:
+    name: chatbot-starter-service
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    database: postgresql
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: ${cloud.services.postgresql.connection.username:myapp}
+    url: ${cloud.services.postgresql.connection.jdbcurl:jdbc:postgresql://localhost:5432/chatbot}
+    password: ${cloud.services.postgresql.connection.password:dbpass}
+    platform: postgresql
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 10
+      pool-name: HikariCP
+  redis:
+    host: locahost
+    url: ${cloud.services.redis.connection.uri:redis://127.0.0.1:6379}
