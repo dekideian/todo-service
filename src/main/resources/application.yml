@@ -8,7 +8,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     database: postgresql
   datasource:
     driverClassName: org.postgresql.Driver
