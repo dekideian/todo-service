@@ -3,6 +3,7 @@ package com.sap.chatbot.config.async;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
@@ -12,7 +13,11 @@ import java.util.stream.Stream;
  */
 public interface AsyncRunner {
 
-  <T> Mono<T> computeAsync(Callable<T> computation);
+  Mono<Void> executeAsync(Runnable task);
+
+  <T> Mono<T> computeOneOrZeroAsync(Callable<Optional<T>> computation);
+
+  <T> Mono<T> computeOneAsync(Callable<T> computation);
 
   <T, C extends Iterable<T>> Flux<T> computeManyAsync(Callable<C> computation);
 
