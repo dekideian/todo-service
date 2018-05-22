@@ -1,4 +1,4 @@
-package com.sap.chatbot.async.impl;
+package com.sap.chatbot.async.core;
 
 import com.sap.chatbot.async.AsyncRunner;
 import org.springframework.beans.factory.annotation.Autowired;
