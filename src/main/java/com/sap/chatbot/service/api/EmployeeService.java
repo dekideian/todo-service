@@ -2,8 +2,8 @@ package com.sap.chatbot.service.api;
 
 import com.sap.chatbot.domain.entities.Employee;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -11,7 +11,7 @@ import java.util.UUID;
  * @since 22/05/2018
  */
 public interface EmployeeService {
-  Optional<Employee> findOne(UUID id);
+  Mono<Employee> findOne(UUID id);
 
   Flux<Employee> findAll();
 }

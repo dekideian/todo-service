@@ -4,7 +4,6 @@ import com.sap.chatbot.async.AsyncRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
@@ -19,53 +18,51 @@ import java.util.stream.Stream;
  * @since 22/05/2018
  */
 @Component
-public class JdbcPooledAsyncRunner implements AsyncRunner {
+public class PooledAsyncRunner implements AsyncRunner {
 
-  private final Scheduler jdbcScheduler;
-  private final TransactionTemplate transactionTemplate;
+  private final Scheduler scheduler;
 
   @Autowired
-  public JdbcPooledAsyncRunner(Scheduler jdbcScheduler, TransactionTemplate transactionTemplate) {
-    this.jdbcScheduler = jdbcScheduler;
-    this.transactionTemplate = transactionTemplate;
+  public PooledAsyncRunner(Scheduler scheduler) {
+    this.scheduler = scheduler;
   }
 
   @Override
-  public Mono<Void> executeAsync(Runnable task) {
+  public Mono<Void> execute(Runnable task) {
     return Mono.<Void>fromRunnable(task)
-        .subscribeOn(jdbcScheduler)
+        .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());
   }
 
   @Override
-  public <T> Mono<T> computeOneOrZeroAsync(Callable<Optional<T>> computation) {
+  public <T> Mono<T> oneOrZero(Callable<Optional<T>> computation) {
     return Mono.fromCallable(computation)
         .flatMap(Mono::justOrEmpty)
-        .subscribeOn(jdbcScheduler)
+        .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());
   }
 
   @Override
-  public <T> Mono<T> computeOneAsync(Callable<T> computation) {
+  public <T> Mono<T> one(Callable<T> computation) {
     return Mono.fromCallable(computation)
-        .subscribeOn(jdbcScheduler)
+        .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());
   }
 
   @Override
   @Transactional
-  public <T, C extends Iterable<T>> Flux<T> computeManyAsync(Callable<C> computation) {
+  public <T, C extends Iterable<T>> Flux<T> many(Callable<C> computation) {
     return Mono.fromCallable(computation)
         .flatMapMany(Flux::fromIterable)
-        .subscribeOn(jdbcScheduler)
+        .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());
   }
 
   @Override
-  public <T> Flux<T> computeStreamedAsync(Callable<Stream<T>> computation) {
+  public <T> Flux<T> stream(Callable<Stream<T>> computation) {
     return Mono.fromCallable(computation)
         .flatMapMany(Flux::fromStream)
-        .subscribeOn(jdbcScheduler)
+        .subscribeOn(scheduler)
         .publishOn(Schedulers.parallel());
   }
 }

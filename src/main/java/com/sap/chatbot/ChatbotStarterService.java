@@ -1,7 +1,7 @@
 package com.sap.chatbot;
 
 import com.sap.chatbot.async.AsyncRunner;
-import com.sap.chatbot.repository.api.EmployeeRepository;
+import com.sap.chatbot.repository.api.sync.EmployeeRepository;
 import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +28,7 @@ public class ChatbotStarterService {
   //  private static void runTask(int index, EmployeeRepository employeeRepository, AsyncRunner
   // jdbcPooledAsyncRunner) {
   //    jdbcPooledAsyncRunner
-  //        .computeManyAsync(() -> {
+  //        .many(() -> {
   //          System.out.println("Running task <" + index + "> on " +
   // Thread.currentThread().getName());
   //          return employeeRepository.findEmployeesOlderThan(1000L);

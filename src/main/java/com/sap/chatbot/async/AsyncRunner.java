@@ -13,13 +13,13 @@ import java.util.stream.Stream;
  */
 public interface AsyncRunner {
 
-  Mono<Void> executeAsync(Runnable task);
+  Mono<Void> execute(Runnable task);
 
-  <T> Mono<T> computeOneOrZeroAsync(Callable<Optional<T>> computation);
+  <T> Mono<T> oneOrZero(Callable<Optional<T>> computation);
 
-  <T> Mono<T> computeOneAsync(Callable<T> computation);
+  <T> Mono<T> one(Callable<T> computation);
 
-  <T, C extends Iterable<T>> Flux<T> computeManyAsync(Callable<C> computation);
+  <T, C extends Iterable<T>> Flux<T> many(Callable<C> computation);
 
-  <T> Flux<T> computeStreamedAsync(Callable<Stream<T>> computation);
+  <T> Flux<T> stream(Callable<Stream<T>> computation);
 }
