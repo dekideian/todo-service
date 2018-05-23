@@ -108,6 +108,12 @@
             <version>${vavr.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr-jackson</artifactId>
+            <version>${vavr.version}</version>
+        </dependency>
+
         <!-- underlying container, subject to change -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

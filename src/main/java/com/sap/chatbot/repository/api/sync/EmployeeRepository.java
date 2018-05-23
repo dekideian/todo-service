@@ -1,6 +1,7 @@
 package com.sap.chatbot.repository.api.sync;
 
 import com.sap.chatbot.domain.entities.Employee;
+import io.vavr.collection.Seq;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,6 @@ import java.util.UUID;
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
   @Query("select e from Employee e where e.age > :age")
   List<Employee> findEmployeesOlderThan(@Param("age") Long age);
+
+  Seq<Employee> findByName(String name);
 }

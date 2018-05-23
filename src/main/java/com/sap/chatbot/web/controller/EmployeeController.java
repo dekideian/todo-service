@@ -6,10 +6,7 @@ import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -18,6 +15,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com
@@ -34,8 +32,9 @@ public class EmployeeController {
   }
 
   @GetMapping(path = "/employee", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public Flux<Employee> findAll() {
-    return employeeService.findAll();
+  public Flux<Employee> findAll(
+      @RequestParam(value = "olderThan", required = false) Optional<Long> maybeAge) {
+    return maybeAge.map(employeeService::findAllOlderThan).orElseGet(employeeService::findAll);
   }
 
   @PostMapping(path = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -3,6 +3,7 @@ package com.sap.chatbot.config.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.vavr.jackson.datatype.VavrModule;
 import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class WebFluxConfig implements WebFluxConfigurer {
     return new ObjectMapper()
         .registerModule(new JavaTimeModule())
         .registerModules(new Jdk8Module())
+        .registerModules(new VavrModule())
         .setDateFormat(new ISO8601DateFormat());
   }
 

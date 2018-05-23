@@ -16,4 +16,6 @@ public interface EmployeeService {
   Mono<Employee> findOne(UUID id);
 
   Flux<Employee> findAll();
+
+  Flux<Employee> findAllOlderThan(Long age);
 }

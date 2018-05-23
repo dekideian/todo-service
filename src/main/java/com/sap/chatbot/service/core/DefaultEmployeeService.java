@@ -6,7 +6,6 @@ import com.sap.chatbot.repository.api.sync.EmployeeRepository;
 import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,29 +19,16 @@ import java.util.UUID;
 public class DefaultEmployeeService implements EmployeeService {
   private final EmployeeRepository employeeRepository;
   private final AsyncRunner asyncRunner;
-  private final TransactionTemplate transactionTemplate;
 
   @Autowired
-  public DefaultEmployeeService(EmployeeRepository employeeRepository, AsyncRunner asyncRunner, TransactionTemplate transactionTemplate) {
+  public DefaultEmployeeService(EmployeeRepository employeeRepository, AsyncRunner asyncRunner) {
     this.employeeRepository = employeeRepository;
     this.asyncRunner = asyncRunner;
-    this.transactionTemplate = transactionTemplate;
   }
 
   @Override
   public Mono<Employee> createOne(String name, Long age) {
     return asyncRunner.one(() -> employeeRepository.save(Employee.of(name, age)));
-//    return asyncRunner
-//      .one(() -> transactionTemplate
-//        .execute((status) -> Try
-//          .of(() -> {
-//            final Employee emp = employeeRepository.save(Employee.of(name, age));
-//
-//            return employeeRepository.findById(UUID.fromString("234")).get();
-//          })
-//          .onFailure(error -> {
-//            status.setRollbackOnly();
-//          }).get()));
   }
 
   @Override
@@ -53,5 +39,10 @@ public class DefaultEmployeeService implements EmployeeService {
   @Override
   public Flux<Employee> findAll() {
     return asyncRunner.many(employeeRepository::findAll);
+  }
+
+  @Override
+  public Flux<Employee> findAllOlderThan(Long age) {
+    return asyncRunner.many(() -> employeeRepository.findEmployeesOlderThan(age));
   }
 }
