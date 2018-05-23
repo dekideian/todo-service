@@ -29,18 +29,18 @@ public class WebFluxConfig implements WebFluxConfigurer {
   }
 
   @Bean
-  public Jackson2JsonEncoder jackson2JsonEncoder() {
+  public Jackson2JsonEncoder encoder() {
     return new Jackson2JsonEncoder(objectMapper());
   }
 
   @Bean
-  public Jackson2JsonDecoder jackson2JsonDecoder() {
+  public Jackson2JsonDecoder decoder() {
     return new Jackson2JsonDecoder(objectMapper());
   }
 
   @Override
   public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
-    configurer.defaultCodecs().jackson2JsonEncoder(jackson2JsonEncoder());
-    configurer.defaultCodecs().jackson2JsonDecoder(jackson2JsonDecoder());
+    configurer.defaultCodecs().jackson2JsonEncoder(encoder());
+    configurer.defaultCodecs().jackson2JsonDecoder(decoder());
   }
 }

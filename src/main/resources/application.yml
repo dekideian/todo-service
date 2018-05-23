@@ -24,7 +24,6 @@ spring:
     host: locahost
     url: ${cloud.services.redis.connection.uri:redis://127.0.0.1:6379}
 
-
 logging:
   level:
     org:
