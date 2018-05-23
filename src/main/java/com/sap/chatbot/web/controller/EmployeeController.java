@@ -39,20 +39,26 @@ public class EmployeeController {
 
   @PostMapping(path = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Mono<Employee> createOne(@Valid @RequestBody Mono<EmployeeCreationForm> requestBody) {
-    return requestBody.flatMap(
-        employeeCreationForm ->
-            employeeService.createOne(
-                employeeCreationForm.getName(), employeeCreationForm.getAge()));
+    return createOneHandler(requestBody);
   }
 
   @Bean
-  public RouterFunction<ServerResponse> route() {
+  public RouterFunction<ServerResponse> createOneWebFlux() {
     return RouterFunctions.route(
         RequestPredicates.POST("/employee-webflux")
             .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
         (request) ->
             ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(request.bodyToMono(EmployeeCreationForm.class), EmployeeCreationForm.class));
+                .body(
+                    createOneHandler(request.bodyToMono(EmployeeCreationForm.class)),
+                    Employee.class));
+  }
+
+  private Mono<Employee> createOneHandler(Mono<EmployeeCreationForm> requestBody) {
+    return requestBody.flatMap(
+        employeeCreationForm ->
+            employeeService.createOne(
+                employeeCreationForm.getName(), employeeCreationForm.getAge()));
   }
 }
