@@ -23,7 +23,6 @@ import java.util.Optional;
  */
 @RestController
 public class EmployeeController {
-
   private final EmployeeService employeeService;
 
   @Autowired
@@ -37,7 +36,7 @@ public class EmployeeController {
     return maybeAge.map(employeeService::findAllOlderThan).orElseGet(employeeService::findAll);
   }
 
-  @PostMapping(path = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(path = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Mono<Employee> createOne(@Valid @RequestBody Mono<EmployeeCreationForm> requestBody) {
     return createOneHandler(requestBody);
   }
