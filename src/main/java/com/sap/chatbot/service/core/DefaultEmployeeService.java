@@ -4,7 +4,6 @@ import com.sap.chatbot.async.AsyncRunner;
 import com.sap.chatbot.domain.entities.Employee;
 import com.sap.chatbot.repository.api.sync.EmployeeRepository;
 import com.sap.chatbot.service.api.EmployeeService;
-import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -32,18 +31,18 @@ public class DefaultEmployeeService implements EmployeeService {
 
   @Override
   public Mono<Employee> createOne(String name, Long age) {
-
-    return asyncRunner
-      .one(() -> transactionTemplate
-        .execute((status) -> Try
-          .of(() -> {
-            final Employee emp = employeeRepository.save(Employee.of(name, age));
-
-            return employeeRepository.findById(UUID.fromString("234")).get();
-          })
-          .onFailure(error -> {
-            status.setRollbackOnly();
-          }).get()));
+    return asyncRunner.one(() -> employeeRepository.save(Employee.of(name, age)));
+//    return asyncRunner
+//      .one(() -> transactionTemplate
+//        .execute((status) -> Try
+//          .of(() -> {
+//            final Employee emp = employeeRepository.save(Employee.of(name, age));
+//
+//            return employeeRepository.findById(UUID.fromString("234")).get();
+//          })
+//          .onFailure(error -> {
+//            status.setRollbackOnly();
+//          }).get()));
   }
 
   @Override

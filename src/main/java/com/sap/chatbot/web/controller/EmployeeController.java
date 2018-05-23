@@ -49,7 +49,7 @@ public class EmployeeController {
   @Bean
   public RouterFunction<ServerResponse> route() {
     return RouterFunctions.route(
-        RequestPredicates.POST("/example")
+        RequestPredicates.POST("/employee-webflux")
             .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
         (request) ->
             ServerResponse.ok()
