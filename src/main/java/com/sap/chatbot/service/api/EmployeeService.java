@@ -11,6 +11,8 @@ import java.util.UUID;
  * @since 22/05/2018
  */
 public interface EmployeeService {
+  Mono<Employee> createOne(String name, Long age);
+
   Mono<Employee> findOne(UUID id);
 
   Flux<Employee> findAll();
