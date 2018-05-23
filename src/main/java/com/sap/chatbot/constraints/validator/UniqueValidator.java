@@ -21,6 +21,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, EmployeeCrea
 
   @Override
   public boolean isValid(EmployeeCreationForm value, ConstraintValidatorContext context) {
-    return !uniqueConstraint.name().equalsIgnoreCase(value.getName());
+    return !uniqueConstraint.value().equalsIgnoreCase(value.getName());
   }
 }

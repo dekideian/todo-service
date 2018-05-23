@@ -1,7 +1,6 @@
 package com.sap.chatbot.constraints;
 
 import com.sap.chatbot.constraints.validator.UniqueValidator;
-import org.springframework.core.annotation.AliasFor;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -22,9 +21,5 @@ public @interface Unique {
 
   Class<? extends Payload>[] payload() default {};
 
-  @AliasFor("value")
-  String name() default "";
-
-  @AliasFor("name")
   String value() default "";
 }
