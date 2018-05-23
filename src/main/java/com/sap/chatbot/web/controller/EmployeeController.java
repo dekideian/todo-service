@@ -1,12 +1,12 @@
-package com.sap.chatbot.web.endpoints;
+package com.sap.chatbot.web.controller;
 
 import com.sap.chatbot.domain.entities.Employee;
+import com.sap.chatbot.forms.EmployeeCreationForm;
 import com.sap.chatbot.service.api.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,12 +16,12 @@ import reactor.core.publisher.Mono;
  * @since 23/05/2018
  */
 @RestController
-public class EmployeeEndpoint {
+public class EmployeeController {
 
   private final EmployeeService employeeService;
 
   @Autowired
-  public EmployeeEndpoint(EmployeeService employeeService) {
+  public EmployeeController(EmployeeService employeeService) {
     this.employeeService = employeeService;
   }
 
@@ -30,10 +30,12 @@ public class EmployeeEndpoint {
     return employeeService.findAll();
   }
 
-  // TODO:: validation + post + delete.
-  @PostMapping(path = "/employee", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Mono<Employee> createOne(
-      @RequestParam("name") String name, @RequestParam("age") Long age) {
-    return employeeService.createOne(name, age);
+  @PostMapping(
+    path = "/employee",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public Mono<Employee> createOne(EmployeeCreationForm employeeCreationForm) {
+    return employeeService.createOne(employeeCreationForm.getName(), employeeCreationForm.getAge());
   }
 }

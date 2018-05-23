@@ -56,16 +56,3 @@ public class DefaultEmployeeService implements EmployeeService {
     return asyncRunner.many(employeeRepository::findAll);
   }
 }
-
-// TODO::
-//    return asyncRunner.many(() -> transactionTemplate.execute((status) -> {
-////                employeeRepository.findEmployeesOlderThan(1000L).forEach(System.out::println);
-//          System.out.println("finding");
-//          employeeRepository.findAll().forEach(System.out::println);
-//          System.out.println("deleting");
-//          employeeRepository.deleteAll();
-//          System.out.println("finding again");
-//          employeeRepository.findAll().forEach(System.out::println);
-//          status.setRollbackOnly();
-//          return Collections.emptyList();
-//      }));

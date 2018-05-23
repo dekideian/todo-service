@@ -2,11 +2,13 @@ package com.sap.chatbot.forms;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.io.Serializable;
+
 /**
  * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com
  * @since 23/05/2018
  */
-public class EmployeeCreationForm {
+public class EmployeeCreationForm implements Serializable {
   private final String name;
   private final Long age;
 

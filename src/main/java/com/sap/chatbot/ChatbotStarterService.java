@@ -2,7 +2,6 @@ package com.sap.chatbot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com
@@ -11,6 +10,6 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class ChatbotStarterService {
   public static void main(String[] args) {
-    final ApplicationContext context = SpringApplication.run(ChatbotStarterService.class);
+    SpringApplication.run(ChatbotStarterService.class);
   }
 }
