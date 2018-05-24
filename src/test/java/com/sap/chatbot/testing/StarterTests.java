@@ -67,7 +67,7 @@ public class StarterTests {
   }
 
   @Test
-  public void test3_FunctionalEndPointTest() {
+  public void test3_FunctionalPostEndPointTest() {
 
     List.of(getEmployee(2)).forEach((e) -> {
       WebTestClient.bindToRouterFunction(controller.createOneWebFlux()).build()
@@ -78,6 +78,16 @@ public class StarterTests {
           .jsonPath("$.name").isEqualTo(e.getName()).jsonPath("$.age").isNotEmpty()
           .jsonPath("$.age").isEqualTo(e.getAge());
     });
+  }
+
+  @Test
+  public void test4_FunctionalGetEndPointTest(){
+
+    WebTestClient.bindToRouterFunction(controller.findAllWebFlux()).build()
+        .get().uri("/employee-webflux" ).accept(MediaType.APPLICATION_JSON).exchange()
+        .expectStatus().isOk().expectHeader().contentType(MediaType.APPLICATION_JSON)
+        .expectBodyList(Employee.class).hasSize(3);
+
   }
 
   private EmployeeCreationForm getEmployee(int index) {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -52,6 +53,24 @@ public class EmployeeController {
                 .body(
                     createOneHandler(request.bodyToMono(EmployeeCreationForm.class)),
                     Employee.class));
+  }
+
+
+  @Bean
+  public RouterFunction<ServerResponse> findAllWebFlux (){
+    return RouterFunctions.route(
+        RequestPredicates.GET("/employee-webflux")
+        .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+        (request) ->
+          ServerResponse.ok()
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(getManyHandler(), Employee.class)
+    );
+  }
+
+
+  private Flux<Employee> getManyHandler(){
+    return employeeService.findAll();
   }
 
   private Mono<Employee> createOneHandler(Mono<EmployeeCreationForm> requestBody) {
