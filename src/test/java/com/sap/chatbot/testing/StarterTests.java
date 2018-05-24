@@ -1,5 +1,6 @@
 package com.sap.chatbot.testing;
 
+import com.sap.chatbot.web.controller.EmployeeController;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,9 +30,13 @@ public class StarterTests {
   @Autowired
   WebTestClient client;
 
+  @Autowired
+  EmployeeController controller;
+
 
   List<Tuple2<String, Long>> testData =
-      List.of(Tuple.of("Tester Dude", 1337L), Tuple.of("John Doe", 25L));
+      List.of(Tuple.of("Tester Dude", 1337L), Tuple.of("John Doe", 25L),
+          Tuple.of("Flux User", 43L));
 
   @Test
   public void test1_Create() {
@@ -61,9 +66,22 @@ public class StarterTests {
 
   }
 
+  @Test
+  public void test3_FunctionalEndPointTest() {
+
+    List.of(getEmployee(2)).forEach((e) -> {
+      WebTestClient.bindToRouterFunction(controller.createOneWebFlux()).build()
+          .post().uri("employee-webflux").contentType(MediaType.APPLICATION_JSON_UTF8)
+          .accept(MediaType.APPLICATION_JSON).body(Mono.just(e), EmployeeCreationForm.class)
+          .exchange().expectStatus().isOk().expectHeader()
+          .contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$.name").isNotEmpty()
+          .jsonPath("$.name").isEqualTo(e.getName()).jsonPath("$.age").isNotEmpty()
+          .jsonPath("$.age").isEqualTo(e.getAge());
+    });
+  }
+
   private EmployeeCreationForm getEmployee(int index) {
     return new EmployeeCreationForm().setName(testData.get(index)._1())
         .setAge(testData.get(index)._2());
   }
-
 }
