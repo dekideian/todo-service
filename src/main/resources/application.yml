@@ -2,7 +2,9 @@ server:
   port: ${env.PORT:8080}
   servlet:
     context-path: /api/v1.0/
+---
 spring:
+  profiles: dev
   application:
     name: chatbot-starter-service
   jpa:
@@ -26,7 +28,6 @@ spring:
   rabbitmq:
     username: rmq
     password: pass
-
 ---
 spring:
   profiles:
