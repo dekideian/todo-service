@@ -6,7 +6,7 @@
 
 	<groupId>com.sap.chatbot</groupId>
 	<artifactId>starter-service</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>jar</packaging>
 
 	<name>chatbot-starter-service</name>
