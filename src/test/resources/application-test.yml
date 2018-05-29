@@ -1,0 +1,14 @@
+---
+spring:
+  profiles: test
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database: h2
+  datasource:
+     driverClassName: org.h2.Driver
+     username: CHATBOT
+     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS CHATBOT
+     password: testpasswd
+---
