@@ -48,8 +48,8 @@ public class Todo {
 	@Column
 	private Category category;
 
-	@Column(nullable = false)
-	private Reccurence reccurernce;
+	@Column(name="reccurernce", nullable = false)
+	private Reccurence reccurence;
 
 	@Column
 	private Boolean achieved;
@@ -67,7 +67,7 @@ public class Todo {
     private LocalDateTime createdAt;
 
 	@Embedded
-	private TaskCompletion taskCompletion;
+	private Completion completion;
 	
 	@PrePersist
     public void prePersist() {
@@ -77,22 +77,22 @@ public class Todo {
 	public static Todo of(TodoForm todoForm) {
 		return new Todo(UUID.randomUUID(), todoForm.getName(), todoForm.getGoal(),
 				Category.get(todoForm.getCategory()), Reccurence.get(todoForm.getReccurernce()), false,
-				getIntendedWeekOfYearForTodo(todoForm), isActiveIfWeekNrIsZero(todoForm), new Float("0"), TaskCompletion.emptyProgress());
+				getIntendedWeekOfYearForTodo(todoForm), isActiveIfWeekNrIsZero(todoForm), new Float("0"), Completion.emptyProgress());
 	}
 
 	public Todo(UUID id, String name, String goal, Category category, Reccurence reccurernce, Boolean achieved,
-			int weekNr, Boolean active, Float percentage, TaskCompletion taskCompletion) {
+			int weekNr, Boolean active, Float percentage, Completion taskCompletion) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.goal = goal;
 		this.category = category;
-		this.reccurernce = reccurernce;
+		this.reccurence = reccurernce;
 		this.achieved = achieved;
 		this.weekNr = weekNr;
 		this.active = active;
 		this.percentage = percentage;
-		this.taskCompletion = taskCompletion;
+		this.completion = taskCompletion;
 	}
 	
 	private static boolean isActiveIfWeekNrIsZero(TodoForm todoForm) {
