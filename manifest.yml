@@ -1,17 +1,14 @@
 applications:
-- name: starter-service
-  host: starter-service
+- name: c4c-connector
+  host: c4c-connector
   memory: 1G
   instances: 1
   disk_quota: 1G
-  # health-check-type: http
-  # health-check-http-endpoint: /api/v1.0/health/ig34tLBbklfNa7osapO7/check
   buildpack: java_buildpack
-  path: target/starter-service.jar
+  path: target/c4c-connector.jar
   services:
-    - postgres
-    - redis
-    - rabbitmq
+    - skill-processor-postgres
     - application-logs
   env:
     JAVA_OPTS: -Djava.security.egd=file:///dev/urandom -Dspring.profiles.active=cloud
+    

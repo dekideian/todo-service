@@ -4,33 +4,38 @@ server:
     context-path: /api/v1.0/
 ---
 spring:
+  flyway:
+    locations: classpath:db/
+    placeholder-prefix: $$
+    schemas: todos
+    table: flyway_schema_history
+    baselineOnMigrate: true
   application:
-    name: chatbot-starter-service
+    name: todos-service
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: postgresql
   datasource:
     driverClassName: org.postgresql.Driver
     username: ${cloud.services.postgresql.connection.username:myapp}
-    url: ${cloud.services.postgresql.connection.jdbcurl:jdbc:postgresql://localhost:5432/chatbot}
+    url: ${cloud.services.postgresql.connection.jdbcurl:jdbc:postgresql://localhost:5432/todos}
     password: ${cloud.services.postgresql.connection.password:dbpass}
     platform: postgresql
+    initialization-mode: always
     hikari:
       connection-timeout: 10000
       maximum-pool-size: 20
       pool-name: HikariCP
-  redis:
-    host: locahost
-    url: ${cloud.services.redis.connection.uri:redis://127.0.0.1:6379}
-  rabbitmq:
-    username: rmq
-    password: pass
 ---
+
+
 spring:
   profiles:
     active: dev
+  main: 
+    allow-bean-definition-overriding: true
 logging:
   level:
     org:

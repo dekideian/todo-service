@@ -13,10 +13,6 @@ import com.sap.chatbot.domain.entities.DomainEntitiesMarker;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
-/**
- * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com
- * @since 22/05/2018
- */
 @Configuration
 @EnableTransactionManagement
 @EntityScan(basePackageClasses = DomainEntitiesMarker.class)

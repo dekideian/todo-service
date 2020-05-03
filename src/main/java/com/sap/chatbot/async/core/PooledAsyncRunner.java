@@ -1,17 +1,21 @@
 package com.sap.chatbot.async.core;
 
-import com.sap.chatbot.async.AsyncRunner;
+import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.stream.Stream;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.sap.chatbot.async.AsyncRunner;
+
+ 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.stream.Stream;
 
 /**
  * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com

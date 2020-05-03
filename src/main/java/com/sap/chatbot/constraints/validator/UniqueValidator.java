@@ -1,10 +1,10 @@
 package com.sap.chatbot.constraints.validator;
 
-import com.sap.chatbot.constraints.Unique;
-import com.sap.chatbot.forms.EmployeeCreationForm;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import com.sap.chatbot.constraints.Unique;
+import com.sap.chatbot.forms.EmployeeCreationForm;
 
 /**
  * @author Florin-Gabriel Barbuceanu, florin.barbuceanu@sap.com
