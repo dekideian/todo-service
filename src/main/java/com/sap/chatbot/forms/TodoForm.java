@@ -22,6 +22,6 @@ public class TodoForm {
 	private String reccurernce;
 
 	@JsonProperty("weekNr") 
-	private Short weekNr; // default - this week. o, next week 1 and so on
+	private int weekNr; // default - this week. o, next week 1 and so on
 
 }

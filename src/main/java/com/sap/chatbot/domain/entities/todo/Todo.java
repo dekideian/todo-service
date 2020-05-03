@@ -1,7 +1,6 @@
 package com.sap.chatbot.domain.entities.todo;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -78,17 +77,7 @@ public class Todo {
 	public static Todo of(TodoForm todoForm) {
 		return new Todo(UUID.randomUUID(), todoForm.getName(), todoForm.getGoal(),
 				Category.get(todoForm.getCategory()), Reccurence.get(todoForm.getReccurernce()), false,
-				getIntendedWeekOfYearForTodo(todoForm), true, new Float("0"), TaskCompletion.emptyProgress());
-	}
-
-	private static int getIntendedWeekOfYearForTodo(TodoForm todoForm) {
-		return DateUtil.getWeekOfYear()+todoForm.getWeekNr();
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("Nurse!");
-		System.out.println("week:"+Calendar.WEEK_OF_YEAR);
-		
+				getIntendedWeekOfYearForTodo(todoForm), isActiveIfWeekNrIsZero(todoForm), new Float("0"), TaskCompletion.emptyProgress());
 	}
 
 	public Todo(UUID id, String name, String goal, Category category, Reccurence reccurernce, Boolean achieved,
@@ -104,5 +93,13 @@ public class Todo {
 		this.active = active;
 		this.percentage = percentage;
 		this.taskCompletion = taskCompletion;
+	}
+	
+	private static boolean isActiveIfWeekNrIsZero(TodoForm todoForm) {
+		return todoForm.getWeekNr()>0?false:true;
+	}
+
+	private static int getIntendedWeekOfYearForTodo(TodoForm todoForm) {
+		return DateUtil.getWeekOfYear()+todoForm.getWeekNr();
 	}
 }
